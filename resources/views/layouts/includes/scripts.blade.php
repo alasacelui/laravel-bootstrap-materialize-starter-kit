@@ -1,14 +1,13 @@
 		{{--BS Jquery--}}
-        <!--   Core JS Files   -->
         <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
         <script src="{{ asset('assets/js/core/bootstrap.min.js') }}"></script>
         <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js') }}"></script>
         <script src="{{ asset('assets/js/plugins/smooth-scrollbar.min.js') }}"></script>
         <script src="{{ asset('assets/js/plugins/chartjs.min.js') }}"></script>
 
-        <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
+        {{--Materialize Theme Ui--}}
         <script src="{{ asset('assets/js/material-dashboard.js?v=3.0.0') }}"></script>
-
+        {{--Larave Ui--}}
         <script src="{{ asset('js/app.js') }}"></script>
         {{--DT--}}
         <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
@@ -33,5 +32,5 @@
         {{--Notif--}}
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         {{--Scripts--}}
-        <script src="{{ asset('js/shared/utils.js') }}"></script>
+        <script src="{{ asset('js/shared/utils/utils.js') }}"></script>
         
