@@ -1,92 +1,83 @@
 @extends('layouts.user.userdashboard')
 
+@section('title', 'Manage Profile')
+
 @section('content')
-<div class="container-fluid py-4">
-    {{--Row 1--}}
-    <div class="row">
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <div class="card p-3">
-          <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <h3>18</h3>
-                  <small>Total Employees</small>
-                </div>
-                 <div class="icon icon-lg icon-shape bg-info shadow-primary text-center border-radius-xl">
-                  <i class="material-icons opacity-10">people_outline</i>
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <div class="card p-3">
-          <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <h3>10</h3>
-                  <small>Total Deparments</small>
-                </div>
-                 <div class="icon icon-lg icon-shape bg-info shadow-primary text-center border-radius-xl">
-                  <i class="material-icons opacity-10">account_balance</i>
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
-        <div class="card p-3">
-          <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <h3>10</h3>
-                  <small>Total On Time</small>
-                </div>
-                 <div class="icon icon-lg icon-shape bg-success shadow-success text-center border-radius-xl">
-                  <i class="material-icons opacity-10">access_time</i>
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-3 col-sm-6">
-        <div class="card p-3">
-          <div class="card-body">
-              <div class="d-flex justify-content-between">
-                <div>
-                  <h3>10</h3>
-                  <small>Total Late</small>
-                </div>
-                 <div class="icon icon-lg icon-shape bg-danger shadow-danger text-center border-radius-xl">
-                  <i class="material-icons opacity-10">access_time</i>
-                </div>
-              </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {{--End Row-1--}}
-    {{--Row 2--}}
-    <div class="row mt-4">
-      <div class="col-md-12">
+
+{{-- CONTAINER --}}
+<div class="container-fluid">
+    <br><br>
+    <div class="row justify-content-center align-items-center">
         <div class="card vh-100">
-          <div class="card-body">
+            <div class="card-body">
+                <form action="{{ route('profile.update',auth()->id()) }}" method="POST" class="col-md-4 mx-auto bg-white p-5 rounded" id="profile_form">
+                    @csrf @method('PUT')
 
-          </div>
+                     <img src="{{ handleNullAvatar(auth()->user()->avatar_profile) }}" class="img-fluid rounded-circle d-block mx-auto" width='120' alt="avatar.svg">
+                     <br>
+         
+                     @if (session('message'))
+                         <div class="alert alert-info alert-dismissible fade show p-4" role="alert">
+                            <span class="text-white"> {{session('message')}}</span>
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                         </div>
+                     @endif
+         
+                     @if (session('error'))
+                         <div class="alert alert-warning alert-dismissible fade show p-4" role="alert">
+                             {{session('error')}}
+                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                         </div>
+                     @endif
+         
+                     @if ($errors->any())
+                         <div class="alert alert-danger">
+                             <ul>
+                                 @foreach ($errors->all() as $error)
+                                     <li>{{ $error }}</li>
+                                 @endforeach
+                             </ul>
+                         </div>
+                     @endif
+         
+                     <label class="form-label">Name</label>
+                     <div class="input-group input-group-outline mb-3 ">
+                        <input type="text" class="form-control" value="{{ auth()->user()->full_name }}"  readonly>
+                    </div>
+
+                     <label class="form-label">Email</label>
+                     <div class="input-group input-group-outline mb-3 ">
+                        <input type="email" class="form-control" value="{{ auth()->user()->email }}"  readonly>
+                    </div>
+
+                     <label class="form-label">Current Password</label>
+                     <div class="input-group input-group-outline mb-3 ">
+                        <input type="text" class="form-control"" name="old">
+                     </div>
+
+                     <label class="form-label">New Password</label>
+                     <div class="input-group input-group-outline mb-3 ">
+                        <input type="password" class="form-control"" name="password" placeholder="•••••••••" >
+                     </div>
+
+                     <label class="form-label">Confirm Password</label>
+                     <div class="input-group input-group-outline mb-3 ">
+                        <input type="password" class="form-control"" name="password_confirmation" placeholder="•••••••••" >
+                     </div>
+                  
+                     <input type="file" name="avatar" id="user_image">
+                     <button type="button" class="btn btn-primary form-control"
+                     onclick="event.preventDefault();confirm('Do you want to update?', '', 'update').then(res => res.isConfirmed ? $('#profile_form').submit() : false)"
+                     >Submit <i class="fas fa-paper-plane ml-1"></i> </button>
+                 </form>
+            </div>
         </div>
-      </div>
     </div>
-    {{--End Row 2--}}
-  </div>
+</div>
+{{--End CONTAINER--}}
 @endsection
-
 @section('script')
-{{-- <script src="{{ asset('js/shared/statistic.js') }}"></script> --}}
-
-<script>
-  
-
-</script>
-
+    <script>
+         initiateFilePond('#user_image')
+    </script>
 @endsection
-
