@@ -100,6 +100,19 @@ if(!function_exists('isLikedByAuthUser'))
     }
 }
 
+if(!function_exists('handleNullAvatar'))
+{
+    function handleNullAvatar($img)
+    {
+        if($img) {
+            return $img;
+        }
+
+        return '/img/noimg.svg';
+    }
+
+}
+
 
 if(!function_exists('handleNullImage'))
 {

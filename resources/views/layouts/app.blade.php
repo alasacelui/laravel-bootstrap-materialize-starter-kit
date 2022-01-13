@@ -4,9 +4,7 @@
 
     <title>@yield('title', 'Materialize Kit By Dev Ace')</title>
 
-    @include('layouts.includes.styles')
-
-
+    @include('layouts.includes.guest.styles')
 
 </head>
 <body style="background: rgb(241, 244, 249)">
@@ -17,6 +15,6 @@
     </div>
 
     @routes
-    @include('layouts.includes.scripts')
+    @include('layouts.includes.guest.scripts')
 </body>
 </html>

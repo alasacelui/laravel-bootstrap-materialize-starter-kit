@@ -16,6 +16,7 @@ use App\Http\Controllers\All\{
 use App\Http\Controllers\Admin\{
     DashboardController,
     ActivityLogController,
+    CategoryController,
     UserController
 };
 
@@ -33,6 +34,7 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth', 'admin'], 'prefix' => 'admin', 'as' => 'admin.'],function() {
     Route::resource('dashboard', DashboardController::class);
     Route::resource('user', UserController::class);
+    Route::resource('category', CategoryController::class);
     //Route::get('role', RoleController::class)->name('role.index');
     Route::resource('activity', ActivityLogController::class);
 });

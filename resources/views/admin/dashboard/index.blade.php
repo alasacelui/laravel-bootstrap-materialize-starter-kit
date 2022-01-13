@@ -3,7 +3,7 @@
 @section('content')
 <div class="container-fluid py-4">
     {{--Row 1--}}
-    <div class="row">
+    {{-- <div class="row">
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <div class="card p-3">
           <div class="card-body">
@@ -64,7 +64,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> --}}
     {{--End Row-1--}}
     {{--Row 2--}}
     <div class="row mt-4">

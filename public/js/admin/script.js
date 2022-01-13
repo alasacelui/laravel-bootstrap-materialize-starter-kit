@@ -23,18 +23,32 @@ $(() => {
     //     );
     // }
 
-    // Role
-    if (window.location.href === route("admin.role.index")) {
-        const role_data = [
-            {
-                data: "name",
-                render(data) {
-                    return `<span class='text-capitalize badge bg-info p-2'>${data}</span>`;
-                },
-            },
+    //Category;
+    if (window.location.href === route("admin.category.index")) {
+        const category_data = [
+            { data: "name" },
+            { data: "actions", orderable: false, searchable: false },
         ];
-        c_index($(".role_dt"), route("admin.role.index"), role_data);
+        c_index(
+            $(".category_dt"),
+            route("admin.category.index"),
+            category_data,
+            { title: "<h3 class='text-center'>List of Category </h3>" }
+        );
     }
+
+    // Role
+    // if (window.location.href === route("admin.role.index")) {
+    //     const role_data = [
+    //         {
+    //             data: "name",
+    //             render(data) {
+    //                 return `<span class='text-capitalize badge bg-info p-2'>${data}</span>`;
+    //             },
+    //         },
+    //     ];
+    //     c_index($(".role_dt"), route("admin.role.index"), role_data);
+    // }
 });
 
 //=========================================================
@@ -43,34 +57,72 @@ $(() => {
 //===============================================================================
 // crud function
 
-async function c_index(dt, route, column) {
-    // axios.get("/employer/student_tasks/1/today").then((res) => log(res));
-    $(dt).DataTable({
-        processing: true,
-        serverSide: true,
-        retrieve: true,
-        autoWidth: false,
-        ajax: route,
-        columns: column,
-        pagingType: "numbers",
-        dom: "Bfrtip",
-        // buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5", "print"],
-        buttons: {
-            dom: {
-                button: {
-                    className: "btn btn-dark btn-sm btn-rounded mb-2",
+async function c_index(dt, route, column, print_option = "") {
+    if (print_option) {
+        $(dt).DataTable({
+            processing: true,
+            serverSide: true,
+            retrieve: true,
+            autoWidth: false,
+            ajax: route,
+            columns: column,
+            dom: "Bfrtip",
+            pagingType: "numbers",
+            buttons: {
+                dom: {
+                    button: {
+                        className: "btn btn-dark btn-sm btn-rounded mb-2",
+                    },
                 },
+                buttons: [
+                    "copyHtml5",
+                    "excelHtml5",
+                    "csvHtml5",
+                    "pdfHtml5",
+                    {
+                        extend: "print",
+                        title: "",
+                        repeatingHead: {
+                            logo:
+                                `${baseUrl}/img/logo/logo.png` ??
+                                print_option.logo,
+                            logoPosition: "center",
+                            logoStyle: "width:200px;margin-bottom:15px;",
+                            title: print_option.title,
+                            //title: "<h3>Sample Heading</h3>",
+                        },
+                    },
+                ],
+                position: "bottom",
             },
-            buttons: [
-                "copyHtml5",
-                "excelHtml5",
-                "csvHtml5",
-                "pdfHtml5",
-                "print",
-            ],
-            position: "bottom",
-        },
-    });
+        });
+    } else {
+        $(dt).DataTable({
+            processing: true,
+            serverSide: true,
+            retrieve: true,
+            autoWidth: false,
+            ajax: route,
+            columns: column,
+            dom: "Bfrtip",
+            // buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5", "print"],
+            buttons: {
+                dom: {
+                    button: {
+                        className: "btn btn-dark btn-sm btn-rounded mb-2",
+                    },
+                },
+                buttons: [
+                    "copyHtml5",
+                    "excelHtml5",
+                    "csvHtml5",
+                    "pdfHtml5",
+                    "print",
+                ],
+                position: "bottom",
+            },
+        });
+    }
 }
 
 // activate - deactivate status
@@ -150,7 +202,7 @@ function toggle_modal(modal, form, modal_title, buttons, opt = "") {
     $(modal_title[0]).html(
         `${modal_title[1]} <i class="fas fa-plus-circle ms-2"></i> `
     );
-    $(".modal-header").removeClass("bg-success").addClass("bg-info");
+    $(".modal-header").removeClass("bg-primary").addClass("bg-dark");
     $(buttons[0]).css("display", "block"); // add button
     $(buttons[1]).css("display", "none"); // update button
 }
@@ -233,7 +285,7 @@ function c_edit(modal, form, modal_title, buttons, model, opt = "") {
     $(modal).modal("show");
     $(".yes").attr("checked", false); // clear first
     $(".no").attr("checked", false);
-    $(".modal-header").removeClass("bg-info").addClass("bg-success text-white");
+    $(".modal-header").removeClass("bg-dark").addClass("bg-primary");
     $(modal_title[0]).html(
         `${modal_title[1]} <i class="fas fa-edit ms-1"></i> `
     );
