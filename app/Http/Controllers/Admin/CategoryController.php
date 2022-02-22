@@ -37,20 +37,20 @@ class CategoryController extends Controller
     {
        Category::create($request->validated());
 
-       return $this->res(['message' => 'Category Added Successfully']);
+       return $this->res(['success' => 'Category Added Successfully']);
     }
 
     public function update(CategoryRequest $request, Category $category)
     {
        $category->update($request->validated());
 
-       return $this->res(['message' => 'Category Updated Successfully']);
+       return $this->res(['success' => 'Category Updated Successfully']);
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
 
-       return $this->res(['message' => 'Category Deleted Successfully']);
+       return $this->res(['success' => 'Category Deleted Successfully']);
     }
 }

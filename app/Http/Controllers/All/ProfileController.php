@@ -12,16 +12,10 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        if(auth()->user()->hasRole('admin')) {
-            return view('admin.profile.index');
-
-        }
-
-        if(auth()->user()->hasRole('user')) {
-            return view('user.profile.index');
-
-        }
-        
+        return match(auth()->user()->role->name) {
+            'admin' => view('admin.profile.index'),
+            'user' => view('user.profile.index'),
+        };
     }
 
     public function update(Request $request , User $user)
@@ -38,7 +32,7 @@ class ProfileController extends Controller
 
             $this->log_activity($user, 'updated', 'Avatar', $user->name);
 
-            return back()->with(['message' => 'Profile Updated Successfully']);
+            return back()->with(['success' => 'Profile Updated Successfully']);
         }
 
         // update only the password if there is a request
@@ -48,7 +42,7 @@ class ProfileController extends Controller
 
             $this->log_activity($user, 'updated', 'Password', 'some password');
 
-            return back()->with(['message' => 'Password Updated Successfully']);
+            return back()->with(['success' => 'Password Updated Successfully']);
         }
         
         return back()->with(['error' => 'Image or Password field is required']);

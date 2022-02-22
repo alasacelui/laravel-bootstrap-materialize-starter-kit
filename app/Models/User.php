@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use App\Models\Admin\Role;
-use App\Models\Admin\Employee;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -89,10 +88,4 @@ class User extends Authenticatable implements HasMedia
     {
         return optional($this->getFirstMedia('avatar_image'))->getUrl('thumbnail');
     }
-
-    public function employee()
-    {
-        return $this->belongsTo(Employee::class);
-    }
-
 }

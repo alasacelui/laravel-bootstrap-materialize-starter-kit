@@ -1,66 +1,72 @@
-// Globals
-let pond;
-const token = $('meta[name="csrf-token"]').attr("content");
-const baseUrl = window.location.origin;
-let student, student_task_id;
-// let txtarea;
-// let week_id;
-
-$(() => {
-    //==================================================
-    // Router
-    // Activity Logs
-    // if (window.location.href === route("councilor.activity.index")) {
-    //     const activitylog_data = [
-    //         { data: "id" },
-    //         { data: "description" },
-    //         {
-    //             data: "created_at",
-    //             render(data) {
-    //                 return formatDate(data, "datetime");
-    //             },
-    //         },
-    //     ];
-    //     c_index(
-    //         $(".activitylog_dt"),
-    //         route("councilor.activity.index"),
-    //         activitylog_data
-    //     );
-    // }
-});
-//==================================================
-// Custom Functions
-
+//===============================================================================
 // crud function
 
-async function c_index(dt, route, column) {
-    // axios.get("/employer/student_tasks/1/today").then((res) => log(res));
-    $(dt).DataTable({
-        processing: true,
-        serverSide: true,
-        retrieve: true,
-        autoWidth: false,
-        ajax: route,
-        columns: column,
-        pagingType: "numbers",
-        dom: "Bfrtip",
-        // buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5", "print"],
-        buttons: {
-            dom: {
-                button: {
-                    className: "btn btn-dark btn-sm btn-rounded mb-2",
+async function c_index(dt, route, column, print_option = "") {
+    if (print_option) {
+        $(dt).DataTable({
+            processing: true,
+            serverSide: true,
+            retrieve: true,
+            autoWidth: false,
+            ajax: route,
+            columns: column,
+            dom: "Bfrtip",
+            pagingType: "numbers",
+            buttons: {
+                dom: {
+                    button: {
+                        className: "btn btn-dark btn-sm btn-rounded mb-2",
+                    },
                 },
+                buttons: [
+                    "copyHtml5",
+                    "excelHtml5",
+                    "csvHtml5",
+                    "pdfHtml5",
+                    {
+                        extend: "print",
+                        title: "",
+                        repeatingHead: {
+                            logo:
+                                `${baseUrl}/img/logo/logo.png` ??
+                                print_option.logo,
+                            logoPosition: "center",
+                            logoStyle: "width:200px;margin-bottom:15px;",
+                            title: print_option.title,
+                            //title: "<h3>Sample Heading</h3>",
+                        },
+                    },
+                ],
+                position: "bottom",
             },
-            buttons: [
-                "copyHtml5",
-                "excelHtml5",
-                "csvHtml5",
-                "pdfHtml5",
-                "print",
-            ],
-            position: "bottom",
-        },
-    });
+        });
+    } else {
+        $(dt).DataTable({
+            processing: true,
+            serverSide: true,
+            retrieve: true,
+            autoWidth: false,
+            ajax: route,
+            columns: column,
+            dom: "Bfrtip",
+            // buttons: ["copyHtml5", "excelHtml5", "csvHtml5", "pdfHtml5", "print"],
+            buttons: {
+                dom: {
+                    button: {
+                        className: "btn btn-dark btn-sm btn-rounded mb-2",
+                    },
+                },
+                buttons: [
+                    "copyHtml5",
+                    "excelHtml5",
+                    "csvHtml5",
+                    "pdfHtml5",
+                    "print",
+                ],
+                position: "bottom",
+            },
+        });
+    }
 }
 
 // activate - deactivate status
@@ -140,7 +146,7 @@ function toggle_modal(modal, form, modal_title, buttons, opt = "") {
     $(modal_title[0]).html(
         `${modal_title[1]} <i class="fas fa-plus-circle ms-2"></i> `
     );
-    $(".modal-header").removeClass("bg-success").addClass("bg-info");
+    $(".modal-header").removeClass("bg-primary").addClass("bg-dark");
     $(buttons[0]).css("display", "block"); // add button
     $(buttons[1]).css("display", "none"); // update button
 }
@@ -165,7 +171,7 @@ async function c_store(form, dt, route_name) {
         try {
             // request
             const res = await axios.post(route(route_name), form_data);
-            success(res.data.message);
+            success(res.data.success);
             $(form)[0].reset(); // clear input field
             pond ? pond.removeFiles() : "";
             $(dt).DataTable().draw(); // update dt
@@ -223,7 +229,7 @@ function c_edit(modal, form, modal_title, buttons, model, opt = "") {
     $(modal).modal("show");
     $(".yes").attr("checked", false); // clear first
     $(".no").attr("checked", false);
-    $(".modal-header").removeClass("bg-info").addClass("bg-success text-white");
+    $(".modal-header").removeClass("bg-dark").addClass("bg-primary");
     $(modal_title[0]).html(
         `${modal_title[1]} <i class="fas fa-edit ms-1"></i> `
     );
@@ -290,7 +296,7 @@ async function c_update(form, dt, route_name, event, opt = "") {
                     `${route(route_name, model_id)}`,
                     form_data
                 ); // fake update request
-                success(res.data.message);
+                success(res.data.success);
                 pond ? pond.removeFiles() : "";
                 $(dt).DataTable().draw(); // update dt
             } catch (e) {
@@ -317,7 +323,7 @@ async function c_update(form, dt, route_name, event, opt = "") {
                 `${route(route_name, model_id)}`,
                 form_data
             ); // fake update request
-            success(res.data.message);
+            success(res.data.success);
             pond ? pond.removeFiles() : "";
             $(dt).DataTable().draw(); // update dt
         } catch (e) {
@@ -340,7 +346,7 @@ async function c_destroy(id, routename, dt, opt = "") {
     if (result.isConfirmed) {
         try {
             const res = await axios.delete(route(routename, id));
-            success(res.data.message);
+            success(res.data.success);
             if (opt) {
                 $(opt).closest("tr").remove();
             } else {

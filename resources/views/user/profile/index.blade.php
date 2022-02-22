@@ -16,29 +16,7 @@
                      <img src="{{ handleNullAvatar(auth()->user()->avatar_profile) }}" class="img-fluid rounded-circle d-block mx-auto" width='120' alt="avatar.svg">
                      <br>
          
-                     @if (session('message'))
-                         <div class="alert alert-info alert-dismissible fade show p-4" role="alert">
-                            <span class="text-white"> {{session('message')}}</span>
-                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                         </div>
-                     @endif
-         
-                     @if (session('error'))
-                         <div class="alert alert-warning alert-dismissible fade show p-4" role="alert">
-                             {{session('error')}}
-                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                         </div>
-                     @endif
-         
-                     @if ($errors->any())
-                         <div class="alert alert-danger">
-                             <ul>
-                                 @foreach ($errors->all() as $error)
-                                     <li>{{ $error }}</li>
-                                 @endforeach
-                             </ul>
-                         </div>
-                     @endif
+                     @include('layouts.includes.alert')
          
                      <label class="form-label">Name</label>
                      <div class="input-group input-group-outline mb-3 ">
