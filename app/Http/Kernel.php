@@ -2,10 +2,7 @@
 
 namespace App\Http;
 
-
-use App\Http\Middleware\isHead;
 use App\Http\Middleware\isAdmin;
-use App\Http\Middleware\isEmployee;
 use App\Http\Middleware\isUser;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 

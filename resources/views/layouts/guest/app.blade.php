@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
 
     <title>@yield('title', 'Materialize Kit By Dev Ace')</title>
 
-    @include('layouts.includes.guest.styles')
+    @include('layouts.guest.styles')
 
 </head>
+
 <body style="background: rgb(241, 244, 249)">
     <div id="top">
         <main class="">
@@ -15,6 +17,7 @@
     </div>
 
     @routes
-    @include('layouts.includes.guest.scripts')
+    @include('layouts.guest.scripts')
 </body>
+
 </html>

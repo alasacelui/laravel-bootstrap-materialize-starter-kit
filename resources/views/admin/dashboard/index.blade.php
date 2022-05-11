@@ -1,9 +1,9 @@
-@extends('layouts.admin.admindashboard')
+@extends('layouts.admin.app')
 
 @section('content')
-<div class="container-fluid py-2">
-    {{--Row 1--}}
-    {{-- <div class="row">
+    <div class="container-fluid py-2">
+        {{-- Row 1 --}}
+        {{-- <div class="row">
       <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
         <div class="card p-3">
           <div class="card-body">
@@ -65,28 +65,23 @@
         </div>
       </div>
     </div> --}}
-    {{--End Row-1--}}
-    {{--Row 2--}}
-    <div class="row mt-3">
-      <div class="col-md-12">
-        <div class="card vh-100">
-          <div class="card-body">
+        {{-- End Row-1 --}}
+        {{-- Row 2 --}}
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <div class="card vh-100">
+                    <div class="card-body">
 
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+        {{-- End Row 2 --}}
     </div>
-    {{--End Row 2--}}
-  </div>
 @endsection
 
 @section('script')
-{{-- <script src="{{ asset('js/shared/statistic.js') }}"></script> --}}
+    {{-- <script src="{{ asset('js/shared/statistic.js') }}"></script> --}}
 
-<script>
-  
-
-</script>
-
+    <script></script>
 @endsection
-
